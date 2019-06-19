@@ -4,22 +4,11 @@
 	require(ape)
 	require(ggplot2)
 
-## drop_extra
-	# drops extra tips from a tree
-	# tree: phylo object, to be pruned
-	# keep: character vector, tip names to retain
-	# test code:
-	# tree1 <- read.tree(text="(A:0.1,B:0.2,(C:0.3,D:0.4):0.5);")
-	# drop_extra(tree1, keep=c("A", "B", "D"))
-	drop_extra <- function(tree, keep){
-		treeabsent <- tree$tip.label[! tree$tip.label %in% keep]
-		return(drop.tip(tree, treeabsent))
-	}
-
 
 ## accumulate_otutable
 	# takes a regular time-series OTU table and accumulates it 
 	# otutable: matrix of observations, rows=otus, cols=samples
+	# otutable must have rownames and colnames
 	# binary: T/F, should output be transformed to presence/absence? default is TRUE
 	accumulate_otutable <- function(otutable, binary=TRUE){
 		output <- t(apply(X=otutable, MAR=1, FUN=cumsum))
@@ -45,7 +34,7 @@
 		if( !is.null(tree) ){
 			# make distmat if tree was provided
 			if( ! all(rownames(otutable) %in% tree$tip.label) ){stop("ERROR: not all OTUs are in tree.")}
-			tree <- drop_extra(tree, keep=rownames(otutable))
+			tree <- keep.tip(tree, tip=rownames(otutable))
 			distmat <- cophenetic.phylo(tree)
 		}else{
 			# check and simplify distmat if it was provided instead of tree
@@ -158,7 +147,7 @@
 		if(md_order_col > 0){ metadata <- metadata[ order(metadata[,md_order_col], decreasing=rev_md_order), ] }
 		which_order_a2b <- function(unsorted, template){ as.integer(sapply(X=template, FUN=function(x){which(x==unsorted)})) }
 		metadata <- metadata[which_order_a2b(rownames(metadata), colnames(otutable)), ]
-		if( !is.null(tree) ){ tree <- drop_extra(tree=tree, keep=rownames(otutable)) }
+		if( !is.null(tree) ){ tree <- keep.tip(tree, tip=rownames(otutable)) }
 		if( !is.null(distmat)){ distmat <- distmat[which_order_a2b(rownames(distmat), rownames(otutable)), which_order_a2b(colnames(distmat), rownames(otutable))] }
 
 		# accumulate otu table
@@ -842,7 +831,7 @@
 		}
 		otutable <- otutable[which_order_a2b(rownames(otutable), otus_union), ]
 		if(!is.null(distmat)){ distmat <- distmat[ which_order_a2b(rownames(distmat), otus_union), which_order_a2b(colnames(distmat), otus_union)]} 
-		if(!is.null(tree)){ tree <- drop_extra(tree, keep=otus_union)}
+		if(!is.null(tree)){ tree <- keep.tip(tree, tip=otus_union)}
 
 
 		# do rarefaction, which may drop samps, so fix otutable and metadata again.
@@ -868,14 +857,14 @@
 			observed <- rowSums(otutable) > 0
 			otutable <- otutable[observed, ]
 			if(!is.null(distmat)){ distmat <- distmat[observed, observed] }
-			if(!is.null(tree)){ tree <- drop_extra(tree, keep=rownames(otutable)) }
+			if(!is.null(tree)){ tree <- keep.tip(tree, tip=rownames(otutable)) }
 		}
 
 		# merge tree 0-dists 
 		if(merge_tree_0dists == TRUE && (!is.null(tree)) ){
 			message("Merging 0-distance OTUs")
 			otutable <- combine_0dist_otus(otutable=otutable, tree=tree, distmat=NULL)
-			tree <- drop_extra(tree, keep=rownames(otutable))
+			tree <- keep.tip(tree, tip=rownames(otutable))
 			if(!is.null(distmat)){ distmat <- distmat[ 
 				which_order_a2b(rownames(distmat), rownames(otutable)), 
 				which_order_a2b(colnames(distmat), rownames(otutable))
@@ -890,7 +879,7 @@
 				which_order_a2b(rownames(distmat), rownames(otutable)), 
 				which_order_a2b(colnames(distmat), rownames(otutable))
 			]
-			if(!is.null(tree)){ tree <- drop_extra(tree, keep=rownames(otutable)) }
+			if(!is.null(tree)){ tree <- keep.tip(tree, tip=rownames(otutable)) }
 		}
 
 		# sort metadata and otutable by md_order_col
