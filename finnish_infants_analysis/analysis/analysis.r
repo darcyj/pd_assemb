@@ -7,8 +7,7 @@
 	library(parallel)
 	library(data.table)
 	library(ggplot2)
-	source("../../dev/assembly_model_functions_v8.r")
-	source("../../dev/prep_check_inputs_2.r")
+	source("../../R_functions/assembly_model_functions.r")
 
 ## global variables
 	global_ncores <- 16
