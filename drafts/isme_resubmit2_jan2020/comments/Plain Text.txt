@@ -1,0 +1,29 @@
+
+
+Comments from reviewer(s):
+
+Referee #1 (Comments to the Author):
+
+I have carefully re-read the revised manuscript, and I can see and appreciate all the hard work that went into the revision. Unfortunately, many of my original concerns remain. However, before I get into it, I want to emphasize that I think the authors are exploring a very interesting and important topic. It is just that the topic is also very difficult to tackle, and the data/patterns need careful consideration before jumping to conclusions.
+
+This study aims to understand the processes underlying recruitment patterns into host-associated microbial communities. The central finding is that the order of arrival (i.e., recruitment/detection) is non-random. Specifically, that species which are more closely related to community members recruit sooner than species which are less closely related to community members. While I am pleased to see many improvements to the manuscript, I still have significant lingering concerns.
+
+My foremost concern, as I stated in my initial review, is that, “I don’t think it is acceptable nowadays to use patterns of phylogenetic relatedness in communities to infer community assembly processes in a dynamic system.” There is now strong theoretical evidence that species in a community may be underdispersed (clustered) due to either competition or environmental filtering. The link between community patterns and process depends critically on the traits and nature of competition/environmental filtering occurring in the community (e.g., Mayfield and Levine 2010). Moreover, in this paper, we are two steps further removed from process than in many other studies on community patterns: (1) we are ignoring the importance of species abundances to community and immigration dynamics, and (2) we are ignoring the fact that phylogenetic relatedness does not always correlate with functional similarity (Cavendar-Bares et al 2014). In other words, I am not convinced that there is anything we can conclude about process here (or at least I haven’t been sufficiently convinced of it by the Introduction). As such, I do not agree with the overall framing of the study in the Abstract and Introduction; in particular, I do not think it is worthwhile to bring up overdispersion/underdispersion/naturalization/preadaptation hypotheses if they are not readily useful for connecting pattern and process. Now, it may be that reporting the pattern of phylogenetically underdispersed recruitment is useful from an applied standpoint (and the authors raise this point in the Discussion). However, in my opinion, the Abstract/Introduction should focus on that applied angle, and not on trying to provide support for conceptual frameworks that are ultimately unable to unambiguously connect pattern and process.
+
+A closely related concern involves the assumptions that go into the neutral/null model, which interfere with my ability to fully believe the overall conclusions. First: the neutral/null model in this study assumes that all species in the regional species pool are equally likely to arrive. The authors then treat any deviations from this null model as a non-random pattern of arrival. However, in reality, a true neutral/null model should assume that all *individuals* are equally likely to arrive, not all species; in other words, the relative abundances of species (zOTUs) in the regional species pool should significantly impact colonization patterns, and thus should affect null expectations about arrival times. Indeed, in some cases the composition of the community itself will partly arise from the relative abundances of taxa in the regional species pool, e.g., if some populations persist or are common simply due to propagule pressure. A second assumption of the null/neutral model is that the regional species pool is static over time, even though it likely is not; this assumption isn’t as problematic to me, but it should probably be mentioned. Overall, I feel the authors need to explore these assumptions, and how they might impact their results. Are we sure that these assumptions do not fundamentally undermine the authors’ main conclusion of underdispersion?
+
+A few other minor things:
+
+- I like the added section about detection and recruitment in the Discussion (L330-L343). Indeed, these details seem critical to understand the study. Because of their importance for comprehension, I think this clear description should be present in the Introduction, not the Discussion.
+
+- Related: The shift to using “detection” is an important one, but it has been overdone in my opinion. I think it is important to state early and often that there are methodological limits to our ability to detect recruitment. However, I think this only needs to be mentioned a few times, and then “recruitment” should be used thereafter. If the paper is ultimately trying to understand recruitment patterns, then it is confusing to not use the word recruitment when discussing hypotheses and results. As it stands, the reader has to mentally translate “detection” to “recruitment” over and over. It leads the reader to repeatedly ask the question: If detection ability is such a problematic experimental limitation to inferring recruitment, then how can we justify using it to understand recruitment patterns?
+
+- It should be made clear in the abstract that overdispersion/underdispersion results in this study refer to the *order* of arrival.
+
+
+
+Referee #2 (Comments to the Author):
+
+I thank the authors for carefully and thoughtfully addressing all of my major concerns. The authors very clearly modified the manuscript to identify the major limitations and assumptions of the study and to avoid unsupported generalisations. I believe the revised manuscript presents a very strong study and will be of broad interest to those in microbial ecology.
+
+

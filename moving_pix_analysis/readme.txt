@@ -4,12 +4,9 @@ model_inputs
 	Raw input files for analyses. Produced by make_inputs.sh in bioinfo folder.
 
 bioinfo
-	Bioinformatic porocessing of raw sequence data.
+	Download and bioinformatic porocessing of raw sequence data.
 	Not included in github repo because of storage limitations.
 	Available upon request: darcyj@colorado.edu
-
-download
-	downloading of raw sequence data.
 
 analysis_4x2
 	Main analysis for the moving pictures data set.
@@ -24,3 +21,5 @@ temporal
 male_gut_cluster_model
 	analysis of the effect of different clustering depths (i.e. 97% OTUs vs 99%) on D.
 
+alternative_null_models_comparison
+	implemetation and output of "individual null" as described in paper.

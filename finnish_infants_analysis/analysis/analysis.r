@@ -94,7 +94,6 @@
 
 	# which are not significant?
 	subject_metadata[which(subject_metadata$pval > 0.05), ]
-	# 3, all 
 
 	# test if mean Ds are different between antibiotics vs control
 	# actually a Mann-Whitney U test

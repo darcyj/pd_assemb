@@ -95,7 +95,7 @@ To run our model with minimal user brain damage, we include a workflow script th
 
 This script is parallelized, which speeds it up significantly. To our knowledge, this parallelization will not work on Windows, but works well on Mac and Linux. Let's run the workflow script on our male gut and male right palm data sets. Progress bars and progress messages are not shown in this tutorial, but they are quite verbose. Here, we run the model with only 500 simulations for both model fitting and significance testing, just so it finishes quickly. We use `ncores = 12` because our machine has 12 processing cores (2x Intel Xeon E5-2643). We have found that using virtual cores (hyper threading) can cause the function to crash, so it is best to use less than or equal to the number of physical cores available on your machine or cluster. 
 
-To get a handle on memory use, we recommend running the script with `ncores=1`, monitoring memory use with `top` or similar, and then scaling the number of cores used assuming each will use the same amount of memory as the single-threaded job. For the male right palm analysis below, each of our 12 threads used approximately 4 GB of RAM, totaling 48 GB RAM. Memory use is proportional to the number of OTUs in a data set. 
+To get a handle on memory use, we recommend running the script with `ncores=1`, monitoring memory use with `top` or similar, and then scaling the number of cores used assuming each will use the same amount of memory as the single-threaded job. For the male right palm analysis below, each of our 12 threads used approximately 3 GB of RAM, totaling roughly 36 GB RAM. Memory use is proportional to the number of OTUs in a data set.
 
 ```{r echo = T, results = 'hide', eval = T, message = FALSE, warning = FALSE}
   male_gut_results <- pd_assemb_workflow(
@@ -132,4 +132,40 @@ The function `plot_dispersion_ests_violin` takes a list of results lists as gene
 
 ```{r echo = T, eval = T}
   plot_dispersion_ests_violin( list(male_gut_results, male_rpalm_results) )
+```
+
+## Testing against alternative "individual null"
+
+The "individual null" is an alternative null model that accounts for the relative abundance of OTUs (or ASVs or zOTUs or whatever) in a data subset. Note that testing against this null is asking a slightly different question than the "species null" used in the workflow script, although in our analysis the answers were almost all the same. Put simply, testing against the "individual null" is asking whether we observe significant phylogenetic over/underdispersion when relative abundances of OTUs are taken into account. Note that this analysis requires the Rcpp package, to run C++ code.
+
+First, load the functions necessary for running the "individual null". This will take a second due to compilation of C++ code.
+
+```{r echo = T, eval = T}
+  source("alt_null_functions.r")
+```
+
+We will run it on the same `male_gut_inputs` object generated above. We will run 500 permutations.
+
+```{r echo = T, eval = T}
+  nperm <- 500
+  # define m, which is midpoint sample index. See paper for more details.
+  m <- round(ncol(male_gut_inputs$otutable)/2)
+  # get vector of nperm null PDs
+  ind_nuls <- replicate(nperm, indiv_null(male_gut_inputs$otutable, male_gut_inputs$tree, nsamp=m))
+  # get empirical PD
+  emp <- one_sample_pd(male_gut_inputs$cum_otutable[,m], ids=rownames(male_gut_inputs$cum_otutable), tree=male_gut_inputs$tree)
+  # calculate P-value
+  pval <- (sum(ind_nuls < emp) + 1) / length(ind_nuls)
+  pval
+```
+
+Make a plot:
+
+```{r echo = T, eval = T}
+  # calculate range for plot
+  xrange <- range(c(emp, ind_nuls)) + c(-1 * sd(ind_nuls), sd(ind_nuls))
+  # draw histogram
+  hist(ind_nuls, xlim=xrange, main="Male gut individual null", col="red", xlab="PDm")
+  # draw vertical blue line for empirical PDm
+  abline(v=emp, col="blue", lwd=3)
 ```
